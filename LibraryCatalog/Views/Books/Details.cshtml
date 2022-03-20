@@ -1,0 +1,16 @@
+@{
+  Layout = "_Layout";
+}
+
+@model LibraryCatalog.Models.Book
+
+<h2>Book Details</h2>
+
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<h2>Author: @Html.LabelFor(model => model.Author)</h2>
+<h2>Genre: @Html.LabelFor(model => model.Genre)</h2>
+<h2>Publish Date: @Html.DisplayFor(model => model.PublishDate)</h2>
+
+<p>@Html.ActionLink("Back to books", "Index")</p>
+<p>@Html.ActionLink("Edit book", "Edit", new { id = Model.BookId })</p>
+<p>@Html.ActionLink("Delete book", "Delete", new { id = Model.BookId })</p>
