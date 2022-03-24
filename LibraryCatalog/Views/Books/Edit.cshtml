@@ -15,10 +15,12 @@
   @Html.LabelFor(model => model.Name)
   @Html.EditorFor(model => model.Name)
 
-  @Html.LabelFor(model => model.Author)
+  @Html.LabelFor(model => model.AuthorId, "Author")
+  @* @Html.EditorFor(model => model.AuthorId) *@
   @Html.DropDownList("AuthorId")
 
-  @Html.LabelFor(model => model.Genre)
+  @Html.LabelFor(model => model.GenreId, "Genre")
+  @* @Html.EditorFor(model => model.GenreId) *@
   @Html.DropDownList("GenreId")
 
 

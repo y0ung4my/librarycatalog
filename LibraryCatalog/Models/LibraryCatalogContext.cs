@@ -8,6 +8,8 @@ namespace LibraryCatalog.Models
     public DbSet<Author> Author { get; set; }
     public DbSet<Genre> Genre { get; set; }
     public DbSet<AuthorGenre> AuthorGenre {get; set;}
+    public DbSet<AuthorBook> AuthorBook {get; set;}
+    public DbSet<BookGenre> BookGenre {get; set;}
 
 
     public LibraryCatalogContext(DbContextOptions options) : base(options) { }

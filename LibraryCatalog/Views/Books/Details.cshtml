@@ -7,8 +7,49 @@
 <h2>Book Details</h2>
 
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
-<h2>Author: @Html.LabelFor(model => model.Author)</h2>
-<h2>Genre: @Html.LabelFor(model => model.Genre)</h2>
+<h2>Author:</h2>
+@if(@Model.JoinEntities2.Count == 0)
+{
+  <p>This book does not have any authors</p>
+}
+else
+{
+  <h4>Authors of this book:</h4>
+  <ul>
+  @foreach(var join in Model.JoinEntities2)
+  {
+    <li>@join.Author.Name</li>
+    @using (Html.BeginForm("DeleteAuthor", "Books"))
+    {
+      @Html.Hidden("joinId", @join.AuthorBookId)
+      <input type="submit" value="Delete"/>
+    }
+  }
+  </ul>
+}
+
+<h2>Genre:</h2>
+@if(@Model.JoinEntities3.Count == 0)
+{
+  <p>This book is not in any genres</p>
+}
+else
+{
+  <h4>Genres the book belongs to:</h4>
+  <ul>
+  @foreach(var join in Model.JoinEntities3)
+  {
+    <li>@join.Genre.Name</li>
+    @using (Html.BeginForm("DeleteGenre", "Books"))
+    {
+      @Html.Hidden("joinId", @join.BookGenreId) 
+      <input type="submit" value="Delete"/>
+    }
+  }
+  </ul>
+}
+
+
 <h2>Publish Date: @Html.DisplayFor(model => model.PublishDate)</h2>
 
 <p>@Html.ActionLink("Back to books", "Index")</p>

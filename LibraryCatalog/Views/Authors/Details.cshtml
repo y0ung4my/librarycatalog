@@ -8,7 +8,7 @@
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
-@if(@Model.JoinEntities.Count == 0)
+@if(@Model.JoinEntities2.Count == 0)
 {
   <p>This Author does not contain any titles</p>
 }
@@ -16,7 +16,7 @@ else
 {
   <h4>Books by the Author:</h4>
   <ul>
-  @foreach(var join in Model.JoinEntities)
+  @foreach(var join in Model.JoinEntities2)
   {
     <li>@join.Book.Name</li>
   }
