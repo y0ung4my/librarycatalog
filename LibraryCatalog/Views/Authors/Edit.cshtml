@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 <h4>Edit this Author: @Html.DisplayFor(model => model.Name)</h4>
-
+<div>
 @using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.AuthorId)
@@ -17,4 +17,5 @@
 
   <input type="submit" value="Save" />
 }
+</div>
 <p>@Html.ActionLink("Back to list", "Index")</p>

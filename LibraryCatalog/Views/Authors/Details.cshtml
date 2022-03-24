@@ -7,7 +7,7 @@
 <h2>Author Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
-
+<div>
 @if(@Model.JoinEntities2.Count == 0)
 {
   <p>This Author does not contain any titles</p>
@@ -22,6 +22,8 @@ else
   }
   </ul>
 }
+ </div>
+
 
 <p>@Html.ActionLink("Back to Authors", "Index")</p>
 <p>@Html.ActionLink("Edit Author", "Edit", new { id = Model.AuthorId })</p>

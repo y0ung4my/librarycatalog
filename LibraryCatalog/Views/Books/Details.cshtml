@@ -8,6 +8,7 @@
 
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 <h2>Author:</h2>
+<div>
 @if(@Model.JoinEntities2.Count == 0)
 {
   <p>This book does not have any authors</p>
@@ -27,7 +28,8 @@ else
   }
   </ul>
 }
-
+</div>
+<div>
 <h2>Genre:</h2>
 @if(@Model.JoinEntities3.Count == 0)
 {
@@ -48,7 +50,7 @@ else
   }
   </ul>
 }
-
+</div>
 
 <h2>Publish Date: @Html.DisplayFor(model => model.PublishDate)</h2>
 
