@@ -4,18 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 using LibraryCatalog.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace LibraryCatalog.Controllers
 {
+  [Authorize]
   public class GenresController : Controller
   {
     private readonly LibraryCatalogContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public GenresController(LibraryCatalogContext db)
+    public GenresController(UserManager<ApplicationUser> userManager, LibraryCatalogContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
-
+    [AllowAnonymous]
     public ActionResult Index()
    {
     return View(_db.Genre.ToList());
@@ -47,7 +54,7 @@ namespace LibraryCatalog.Controllers
         return RedirectToAction("Index");    
     }
     
-
+    [AllowAnonymous]
      public ActionResult Details(int id)
     {
         var thisGenre = _db.Genre

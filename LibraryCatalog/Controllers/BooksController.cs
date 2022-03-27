@@ -4,18 +4,24 @@ using Microsoft.AspNetCore.Mvc;
 using LibraryCatalog.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace LibraryCatalog.Controllers
 {
+  [Authorize]
   public class BooksController : Controller
   {
     private readonly LibraryCatalogContext _db;
-
-    public BooksController(LibraryCatalogContext db)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public BooksController(UserManager<ApplicationUser> userManager, LibraryCatalogContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
-
+    [AllowAnonymous]
     public ActionResult Index()
     {
       List<Book> model = _db.Book.ToList();
@@ -46,7 +52,7 @@ namespace LibraryCatalog.Controllers
       }
       return RedirectToAction("Index");
       }
-
+    [AllowAnonymous]
     public ActionResult Details(int id)
     {
       var thisBook = _db.Book

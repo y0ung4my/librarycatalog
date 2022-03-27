@@ -12,7 +12,7 @@ namespace LibraryCatalog.Models
         }
     public int GenreId { get; set; }
     public string Name { get; set; }
-
+    
     public virtual ICollection<AuthorGenre> JoinEntities { get; set; }
     public virtual ICollection<BookGenre> JoinEntities3 { get; set; }
   }
