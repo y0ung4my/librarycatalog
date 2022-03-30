@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System.Web;
 
 namespace LibraryCatalog.Controllers
 {
@@ -22,11 +23,24 @@ namespace LibraryCatalog.Controllers
       _db = db;
     }
     [AllowAnonymous]
-    public ActionResult Index()
-    {
-      List<Book> model = _db.Book.ToList();
-      return View(model);
-    }
+    // public ActionResult Index()
+    // {
+    //   List<Book> model = _db.Book.ToList();
+    //   return View(model);
+    // }
+
+    public ActionResult Index(string searchBy, string search)
+      {
+        if (searchBy == "Name")
+        {
+          return View(_db.Book.Where(x => x.Name.Contains(search) || search == null).ToList());
+        }
+        else
+        {
+          List<Book> model = _db.Book.ToList();
+          return View(model);
+        }
+      }
 
     public ActionResult Create()
     {
@@ -51,7 +65,8 @@ namespace LibraryCatalog.Controllers
           _db.SaveChanges();
       }
       return RedirectToAction("Index");
-      }
+    }
+
     [AllowAnonymous]
     public ActionResult Details(int id)
     {
@@ -106,22 +121,7 @@ namespace LibraryCatalog.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    //   [HttpPost, ActionName("Delete")]
-    // public ActionResult DeleteConfirmed(int authorId)
-    // {
-    //   var thisAuthor = _db.Author.FirstOrDefault(book => book.AuthorId == authorId);
-    //   _db.Author.Remove(thisAuthor);
-    //   _db.SaveChanges();
-    //   return RedirectToAction("Index");
-    // }
-    //   [HttpPost, ActionName("Delete")]
-    // public ActionResult DeleteConfirmed(int id)
-    // {
-    //   var thisBook = _db.Book.FirstOrDefault(book => book.BookId == id);
-    //   _db.Book.Remove(thisBook);
-    //   _db.SaveChanges();
-    //   return RedirectToAction("Index");
-    // }
+
         [HttpPost]
         public ActionResult DeleteAuthor(int joinId)
     {

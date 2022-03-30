@@ -25,9 +25,9 @@ namespace LibraryCatalog.Controllers
 
     [AllowAnonymous]
     public ActionResult Index()
-   {
-    return View(_db.Author.ToList());
-   }
+    {
+      return View(_db.Author.ToList());
+    }
 
     public ActionResult Create()
     {

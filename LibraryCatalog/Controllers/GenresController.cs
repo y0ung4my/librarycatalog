@@ -24,22 +24,9 @@ namespace LibraryCatalog.Controllers
     }
     [AllowAnonymous]
     public ActionResult Index()
-   {
-    return View(_db.Genre.ToList());
-   }
-
-//    [HttpPost]
-//    public ActionResult Create(Genre genre, int BookId)
-// {
-//     _db.Genre.Add(genre);
-//     _db.SaveChanges();
-//     if (BookId != 0)
-//     {
-//         _db.BookGenre.Add(new BookGenre() { BookId = BookId, GenreId = genre.GenreId });
-//         _db.SaveChanges();
-//     }
-//     return RedirectToAction("Index");
-// }
+    {
+      return View(_db.Genre.ToList());
+    }
 
     public ActionResult Create()
     {
@@ -55,7 +42,7 @@ namespace LibraryCatalog.Controllers
     }
     
     [AllowAnonymous]
-     public ActionResult Details(int id)
+    public ActionResult Details(int id)
     {
         var thisGenre = _db.Genre
         .Include(item => item.JoinEntities3)
@@ -63,16 +50,15 @@ namespace LibraryCatalog.Controllers
         .FirstOrDefault(item => item.GenreId == id);
         return View(thisGenre);
     }
- 
 
-   public ActionResult Edit(int id)
-{
-    var thisItem = _db.Genre.FirstOrDefault(genre => genre.GenreId == id);
-    ViewBag.BookId = new SelectList(_db.Book, "BookId", "Name");
-    return View(thisItem);
-}
+    public ActionResult Edit(int id)
+    {
+        var thisItem = _db.Genre.FirstOrDefault(genre => genre.GenreId == id);
+        ViewBag.BookId = new SelectList(_db.Book, "BookId", "Name");
+        return View(thisItem);
+    }
 
-      [HttpPost]
+    [HttpPost]
     public ActionResult Edit(Genre genre, int BookId)
     {
       if (BookId != 0)
@@ -84,23 +70,6 @@ namespace LibraryCatalog.Controllers
       return RedirectToAction("Index");
     }
 
-    
-//     public ActionResult AddBook(int id)
-// {
-//     var thisGenre = _db.Genre.FirstOrDefault(genre => genre.GenreId == id);
-//     ViewBag.BookId = new SelectList(_db.Book, "BookId", "Name");
-//     return View(thisGenre);
-// }
-// [HttpPost]
-// public ActionResult AddBook(Genre genre, int BookId)
-// {
-//     if (BookId != 0)
-//     {
-//       _db.BookGenre.Add(new BookGenre() { BookId = BookId, GenreId = genre.GenreId });
-//       _db.SaveChanges();
-//     }
-//     return RedirectToAction("Index");
-// }
     public ActionResult Delete(int id)
     {
       var thisGenre = _db.Genre.FirstOrDefault(genre => genre.GenreId == id);
@@ -115,13 +84,5 @@ namespace LibraryCatalog.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    // [HttpPost]
-// public ActionResult DeleteCategory(int joinId)
-// {
-//     var joinEntry = _db.BookGenre.FirstOrDefault(entry => entry.BookGenreId == joinId);
-//     _db.BookGenre.Remove(joinEntry);
-//     _db.SaveChanges();
-//     return RedirectToAction("Index");
-// }
   }
 }

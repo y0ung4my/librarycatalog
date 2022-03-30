@@ -1,23 +1,76 @@
 @{
-  Layout = "_Layout";
+    Layout = "_Layout";
 }
 
 @using System.Linq;
-@using LibraryCatalog.Models;
-@model List<LibraryCatalog.Models.Book>
+@model IEnumerable<LibraryCatalog.Models.Book>
 
-<h1>Books</h1>
+
+@{
+    ViewBag.Title = "Index";
+}
 <div>
-@if (@Model.Count == 0)
+<h2>Books</h2>
+<p>
+@using (@Html.BeginForm("Index", "Books", FormMethod.Get))
 {
-  <h3>No books have been added yet!</h3>
-} 
-
-<ul>
-  @foreach(Book book in Model.OrderBy(book => book.Name))
+    <b>Search By:</b>
+    @Html.RadioButton("searchBy", "Name", true) <text>Name</text>
+    @Html.RadioButton("searchBy", "PublishDate") <text>Publish Date</text><br />
+    @Html.TextBox("search") <input type="submit" value="search" />
+}
+</p>
+<br/>
+<table border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PublishDate)
+        </th>
+        <th>Author</th>
+    </tr>
+@if (Model.Count() == 0)
+{
+    <tr>
+        <td colspan="4">
+            No records match search criteria
+        </td>
+    </tr>
+}
+else
+{
+    foreach (var book in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink($"{book.Name}", "Details", new { id = book.BookId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelBook => book.PublishDate)
+            </td>
+            <td>
+                @if(book.JoinEntities2.Count == 0)
+{
+  <p>This book does not have any authors</p>
+}
+else
+{
+  <ul>
+  @foreach(var join in book.JoinEntities2)
   {
-    <li>@Html.ActionLink($"{book.Name}", "Details", new { id = book.BookId })</li>
+    <li>@join.Author.Name</li>
+    @using (Html.BeginForm("DeleteAuthor", "Books"))
+    {
+      @Html.Hidden("joinId", @join.AuthorBookId)
+      @* <input type="submit" value="Delete"/> *@
+    }
   }
-</ul>
-</div>
-<p>@Html.ActionLink("Add new book", "Create")</p>
+  </ul>
+}
+            </td>
+        </tr>
+    }
+}
+</table>
