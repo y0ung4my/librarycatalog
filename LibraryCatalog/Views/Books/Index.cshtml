@@ -29,7 +29,7 @@
         <th>
             @Html.DisplayNameFor(model => model.PublishDate)
         </th>
-        <th>Author</th>
+        <th>Author(s)</th>
     </tr>
 @if (Model.Count() == 0)
 {
@@ -74,3 +74,5 @@ else
     }
 }
 </table>
+
+<p>@Html.ActionLink("Add new book", "Create")</p>

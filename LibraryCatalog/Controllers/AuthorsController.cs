@@ -24,10 +24,23 @@ namespace LibraryCatalog.Controllers
     }
 
     [AllowAnonymous]
-    public ActionResult Index()
-    {
-      return View(_db.Author.ToList());
-    }
+    // public ActionResult Index()
+    // {
+    //   return View(_db.Author.ToList());
+    // }
+    public ActionResult Index(string searchBy, string search)
+      {
+        if (searchBy == "Name")
+        {
+          return View(_db.Author.Where(x => x.Name.Contains(search) || search == null).ToList());
+        }
+        else
+        {
+          List<Author> model = _db.Author.ToList();
+          return View(model);
+        }
+      }
+
 
     public ActionResult Create()
     {

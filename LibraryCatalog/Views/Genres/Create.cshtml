@@ -3,12 +3,14 @@
 }
 
 @model LibraryCatalog.Models.Genre
-
 <h4>Add a new genre</h4>
+
+<div>
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.Name)
   @Html.TextBoxFor(model => model.Name)
   <input type="submit" value="Add new genre" />
 }
+</div>
 <p>@Html.ActionLink("Show all genres", "Index")</p>

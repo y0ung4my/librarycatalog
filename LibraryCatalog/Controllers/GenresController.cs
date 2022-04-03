@@ -23,10 +23,23 @@ namespace LibraryCatalog.Controllers
       _db = db;
     }
     [AllowAnonymous]
-    public ActionResult Index()
-    {
-      return View(_db.Genre.ToList());
-    }
+    // public ActionResult Index()
+    // {
+    //   return View(_db.Genre.ToList());
+    // }
+
+    public ActionResult Index(string searchBy, string search)
+      {
+        if (searchBy == "Name")
+        {
+          return View(_db.Genre.Where(x => x.Name.Contains(search) || search == null).ToList());
+        }
+        else
+        {
+          List<Genre> model = _db.Genre.ToList();
+          return View(model);
+        }
+      }
 
     public ActionResult Create()
     {

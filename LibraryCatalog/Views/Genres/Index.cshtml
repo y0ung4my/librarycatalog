@@ -2,21 +2,69 @@
   Layout = "_Layout";
 }
 
-@using LibraryCatalog.Models;
-@model List<LibraryCatalog.Models.Genre>
+@using System.Linq;
+@model IEnumerable<LibraryCatalog.Models.Genre>
 
-<h1>Genres</h1>
+
+@{
+    ViewBag.Title = "Index";
+}
 <div>
-@if (@Model.Count == 0)
+<h2>Genres</h2>
+<p>
+@using (@Html.BeginForm("Index", "Genres", FormMethod.Get))
 {
-  <h3>No genres have been added yet!</h3>
-} 
-
-<ul>
-  @foreach(Genre genre in Model)
+    <b>Search By:</b>
+    @Html.RadioButton("searchBy", "Name", true) <text>Name</text>
+    @Html.TextBox("search") <input type="submit" value="search" />
+}
+</p>
+<br/>
+<table border="1">
+    <tr>
+        <th>
+            Genre Name
+        </th>
+        <th>
+            Title
+        </th>
+    </tr>
+@if (Model.Count() == 0)
+{
+    <tr>
+        <td colspan="4">
+            No records match search criteria
+        </td>
+    </tr>
+}
+else
+{
+    foreach (var genre in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink($"{genre.Name}", "Details", new { id = genre.GenreId })
+            </td>
+            <td>
+                @if(genre.JoinEntities3.Count == 0)
+{
+  <p>This genre contains includes no titles</p>
+}
+else
+{
+  @foreach(var join in genre.JoinEntities3)
   {
-    <li>@Html.ActionLink($"{genre.Name}", "Details", new { id = genre.GenreId })</li>
+    <li>@join.Book.Name</li>
+    @using (Html.BeginForm("DeleteBook", "Genres"))
+    {
+      @Html.Hidden("joinId", @join.BookGenreId)
+      @* <input type="submit" value="Delete"/> *@
+    }
   }
-</ul>
-</div>
+}
+            </td>
+        </tr>
+    }
+}
+</table>
 <p>@Html.ActionLink("Add new genre", "Create")</p>
