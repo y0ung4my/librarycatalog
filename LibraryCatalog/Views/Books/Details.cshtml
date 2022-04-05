@@ -50,6 +50,27 @@ else
   </ul>
 }
 </div>
+<div>
+<h2>Copies:</h2>
+@if(@Model.Copies.Count == 0)
+{
+  <p>There are no copies of this book!</p>
+}
+else
+{
+  <ul>
+  @foreach(var copy in Model.Copies)
+  {
+    <li>@copy.CopyId</li>
+    @using (Html.BeginForm("DeleteCopy", "Books"))
+    {
+      @Html.Hidden("CopyId", @copy.CopyId) 
+      <input type="submit" value="Delete"/>
+    }
+  }
+  </ul>
+}
+</div>
 
 <h2>Publish Date: @Html.DisplayFor(model => model.PublishDate)</h2>
 

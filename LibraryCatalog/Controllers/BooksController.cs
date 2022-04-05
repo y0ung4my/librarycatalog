@@ -50,8 +50,9 @@ namespace LibraryCatalog.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Book book, int AuthorId, int GenreId)
+    public ActionResult Create(Book book, int AuthorId, int GenreId, int Copies)
     {
+      
       _db.Book.Add(book);
       _db.SaveChanges();
       if (AuthorId != 0)
@@ -63,6 +64,11 @@ namespace LibraryCatalog.Controllers
       {
           _db.BookGenre.Add(new BookGenre() { GenreId = GenreId, BookId = book.BookId });
           _db.SaveChanges();
+      }
+      for (int i = 1; i <= Copies; i++) 
+      {
+        _db.Copy.Add(new Copy() { BookId = book.BookId });
+        _db.SaveChanges();
       }
       return RedirectToAction("Index");
     }
@@ -87,7 +93,7 @@ namespace LibraryCatalog.Controllers
     }
 
     [HttpPost]
-    public ActionResult Edit(Book book, int AuthorId, int GenreId, int JoinId, int JoinId2)
+    public ActionResult Edit(Book book, int AuthorId, int GenreId, int JoinId, int JoinId2, int Copies)
     {
       bool duplicate = _db.AuthorBook.Any(join => join.AuthorId == AuthorId && join.BookId == book.BookId);
       bool duplicate2 = _db.BookGenre.Any(join => join.GenreId == GenreId && join.BookId == book.BookId);
@@ -100,6 +106,11 @@ namespace LibraryCatalog.Controllers
       {
           _db.BookGenre.Add(new BookGenre() { GenreId = GenreId, BookId = book.BookId });
           _db.SaveChanges();
+      }
+      for (int i = 1; i <= Copies; i++) 
+      {
+        _db.Copy.Add(new Copy() { BookId = book.BookId });
+        _db.SaveChanges();
       }
 
       _db.Entry(book).State = EntityState.Modified;
@@ -122,21 +133,30 @@ namespace LibraryCatalog.Controllers
       return RedirectToAction("Index");
     }
 
-        [HttpPost]
-        public ActionResult DeleteAuthor(int joinId)
+    [HttpPost]
+    public ActionResult DeleteAuthor(int joinId)
     {
         var joinEntry = _db.AuthorBook.FirstOrDefault(entry => entry.AuthorBookId == joinId);
         _db.AuthorBook.Remove(joinEntry);
         _db.SaveChanges();
         return RedirectToAction("Index");
     }
-        [HttpPost]
-        public ActionResult DeleteGenre(int joinId)
+    [HttpPost]
+    public ActionResult DeleteGenre(int joinId)
     {
         var joinEntry = _db.BookGenre.FirstOrDefault(entry => entry.BookGenreId == joinId);
         _db.BookGenre.Remove(joinEntry);
         _db.SaveChanges();
         return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public ActionResult DeleteCopy(int CopyId)
+    {
+      var bookCopy = _db.Copy.FirstOrDefault(entry => entry.CopyId == CopyId);
+      _db.Copy.Remove(bookCopy);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
   }
 }
