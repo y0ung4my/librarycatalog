@@ -1,0 +1,13 @@
+@{
+  Layout = "_Layout";
+}
+
+@model LibraryCatalog.Models.Patron
+<h2>Patron Info</h2>
+
+<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+
+
+<p>@Html.ActionLink("Back to patrons", "Index")</p>
+<p>@Html.ActionLink("Edit patron", "Edit", new { id = Model.PatronId })</p>
+<p>@Html.ActionLink("Delete patron", "Delete", new { id = Model.PatronId })</p>

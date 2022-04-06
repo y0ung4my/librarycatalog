@@ -1,0 +1,50 @@
+@{
+    Layout = "_Layout";
+}
+
+@using System.Linq;
+@model IEnumerable<LibraryCatalog.Models.Patron>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+<h2>Patrons</h2>
+<p>
+@using (@Html.BeginForm("Index", "Patrons", FormMethod.Get))
+{
+    <b>Search By:</b>
+    @Html.RadioButton("searchBy", "Name", true) <text>Name</text>
+    @Html.TextBox("search") <input type="submit" value="search" />
+}
+</p>
+<br/>
+<table border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+    </tr>
+@if (Model.Count() == 0)
+{
+    <tr>
+        <td colspan="4">
+            No records match search criteria
+        </td>
+    </tr>
+}
+else
+{
+    foreach (var patron in Model)
+    {
+      <tr>
+        <td>
+          @Html.ActionLink($"{patron.Name}", "Details", new { id = patron.PatronId })
+        </td>
+      </tr>
+    }
+}
+</table>
+
+<p>@Html.ActionLink("Checkout a new book", "Create")</p>
