@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+@model LibraryCatalog.Models.BookCopyPatron
+
+<h4>Create new book loan</h4>
+<div>
+@using (Html.BeginForm())
+{
+
+  @Html.HiddenFor(model => model.BookCopyPatronId)
+
+  @Html.Label("Select book")
+  @Html.DropDownList("BookId")
+  
+  @Html.Label("Select patron")
+  @Html.DropDownList("PatronId")
+
+  <input type="submit" value="Save" />
+}
+</div>
+<p>@Html.ActionLink("Show all loans", "Index")</p>

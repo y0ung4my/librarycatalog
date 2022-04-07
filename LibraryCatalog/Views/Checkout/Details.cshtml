@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+@model LibraryCatalog.Models.BookCopyPatron
+<h2>Checkout Info</h2>
+
+<h3>Book: @Model.Book.Name<h3>
+<h3>Patron: @Model.Patron.Name</h3>
+<h3>Copy: @Model.BookCopyPatronId</h3>
+<h3>Checkout Id: @Model.BookCopyPatronId</h3>
+
+<p>@Html.ActionLink("Back to patrons", "Index")</p>
+<p>@Html.ActionLink("Remove this checkout!", "Delete", new { id = Model.BookCopyPatronId})</p>

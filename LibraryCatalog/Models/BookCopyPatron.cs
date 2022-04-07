@@ -4,7 +4,7 @@ namespace LibraryCatalog.Models
     {
         public int BookCopyPatronId {get; set;}
         public int BookId {get; set;}
-        public int CopyId {get; set;}
+        public int? CopyId {get; set;}
 
         public int PatronId { get; set; }
         public virtual Book Book {get; set;}

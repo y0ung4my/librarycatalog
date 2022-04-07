@@ -1,0 +1,75 @@
+@{
+    Layout = "_Layout";
+}
+
+@using System.Linq;
+@model IEnumerable<LibraryCatalog.Models.BookCopyPatron>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+<h2>Checkout</h2>
+<p>
+@using (@Html.BeginForm("Index", "Checkout", FormMethod.Get))
+{
+    <b>Search By:</b>
+    @Html.RadioButton("searchBy", "BookTitle", true) <text>Book Title</text>
+    @Html.RadioButton("searchBy", "PatronName", true) <text>Patron</text>
+    @Html.TextBox("search") <input type="submit" value="search" />
+}
+</p>
+<br/>
+<table border="1">
+    <tr>
+        <th>
+            Book Title
+        </th>
+        <th>
+            Patron
+        </th>
+        <th>
+            Copy ID
+        </th>
+        <th>
+            Checkout ID
+        </th>
+        <th>
+            Delete
+        </th>
+    </tr>
+@if (Model.Count() == 0)
+{
+    <tr>
+        <td colspan="4">
+            No records match search criteria
+        </td>
+    </tr>
+}
+else
+{
+    foreach (var checkout in Model)
+    {
+        <tr>
+        <td>
+            @checkout.Book.Name
+        </td>
+        <td>
+            @checkout.Patron.Name
+        </td>
+        <td>
+            @checkout.CopyId
+        </td>
+        <td>
+            @Html.ActionLink($"{@checkout.BookCopyPatronId}", "Details", new { id = checkout.BookCopyPatronId })
+        </td>
+        <td>
+            @Html.ActionLink($"Delete", "Delete", new { id = checkout.BookCopyPatronId })
+        </td>
+        </tr>
+    }
+}
+</table>
+
+<p>@Html.ActionLink("Checkout a book", "Create")</p>
